@@ -1,7 +1,7 @@
 #ifndef MLX90614_H
 #define MLX90614_H
 
-#define MLX90614_VERSION "0.1.0"
+#define MLX90614_VERSION "0.1.1"
 
 #include <stdint.h>
 #include <AsyncDelay.h>
