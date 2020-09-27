@@ -30,17 +30,33 @@ void loop(void)
     Serial.print("RAM ");
     Serial.print(addr, HEX);
     Serial.print(": ");
-    Serial.println(mlx90614.read(addr), HEX);
+    uint16_t value;
+    if (mlx90614.read(addr, value)) {
+      Serial.println(value, HEX);
+    } else {
+      Serial.println("(read failed)");
+    }
   }
 
   for (uint8_t addr = 0; addr < 0x20; ++addr) {
     Serial.print("EEPROM ");
     Serial.print(addr, HEX);
     Serial.print(": ");
-    Serial.println(mlx90614.read(0x20 | addr), HEX);
+    uint16_t value;
+    if (mlx90614.read(0x20 | addr, value)) {
+      Serial.println(value, HEX);
+    } else {
+      Serial.println("(read failed)");
+    }
   }
 
   Serial.print("FLAGS: ");
-  Serial.println(mlx90614.read(0xF0), HEX);
+  uint16_t value;
+  if (mlx90614.read(0xF0, value)) {
+    Serial.println(value, HEX);
+  } else {
+    Serial.println("(read failed)");
+  }
+
   delay(10000);
 }
