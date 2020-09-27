@@ -55,8 +55,8 @@ void MLX90614::start(void)
 {
   if (powerPin != 255) {
     // Let SDA and SCL float
-    i2c.setSdaHigh();
-    i2c.setSclHigh();
+    i2c.sdaHigh();
+    i2c.sclHigh();
     digitalWrite(powerPin, HIGH);
     delay.start(powerUpDelay_ms, AsyncDelay::MILLIS);
   }
@@ -72,7 +72,7 @@ void MLX90614::process(void)
 
   case poweringUp:
     if (delay.isExpired()) {
-      i2c.setSclLow();
+      i2c.sclLow();
       delay.start(3, AsyncDelay::MILLIS); // SCL must be low for > 1.44ms
       state = exitingPwm;
     }
@@ -80,7 +80,7 @@ void MLX90614::process(void)
 
   case exitingPwm:
     if (delay.isExpired()) {
-      i2c.setSclHigh();
+      i2c.sclHigh();
       delay.start(2, AsyncDelay::MILLIS);
       state = readingAmbient;
     }
@@ -135,8 +135,8 @@ void MLX90614::process(void)
 
 void MLX90614::finish(void)
 {
-  i2c.setSdaHigh();
-  i2c.setSclHigh();
+  i2c.sdaHigh();
+  i2c.sclHigh();
   if (powerPin != 255)
     digitalWrite(powerPin, LOW);
   state = finished;
